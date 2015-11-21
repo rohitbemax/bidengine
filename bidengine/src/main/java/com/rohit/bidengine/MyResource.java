@@ -11,10 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import com.rohit.bidengine.model.BidItem;
+import com.rohit.bidengine.model.BidStatus;
 import com.rohit.bidengine.model.Bidder;
 import com.rohit.bidengine.model.User;
 import com.rohit.bidengine.repository.BidItemStub;
-import com.rohit.bidengine.repository.BidderRepository;
+import com.rohit.bidengine.repository.BidEnginerRepository;
 
 
 /*
@@ -29,7 +30,7 @@ http://localhost:8080/bidengine/webapi/bidder/biditem/xxx	<- PUT create a bid
 @Path("myresource")
 public class MyResource {
 
-	BidderRepository bidderRepository = new BidderRepository();
+	BidEnginerRepository bidderRepository = new BidEnginerRepository();
 	    
 	/*
      *	This web service will return list of all the bid items 
@@ -84,7 +85,7 @@ public class MyResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public User createAUser(User user) {		
-    	return bidderRepository.createBidder(user);
+    	return bidderRepository.createUser(user);
 	}
     
     /*
@@ -93,8 +94,9 @@ public class MyResource {
     @PUT
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID) {
-    	return bidderRepository.findBidItemByID(bidItemID);
+    public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
+    //public BidStatus updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
+    	return bidderRepository.updateBidItemWithBid(bidItem, bidItemID);
     }
        
     @PostConstruct

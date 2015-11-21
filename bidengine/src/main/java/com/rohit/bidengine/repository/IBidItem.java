@@ -6,7 +6,7 @@ import com.rohit.bidengine.model.BidItem;
 
 public interface IBidItem {
 
-	void addItem(BidItem bidItem);
+	//void addItem(BidItem bidItem);
 
 	boolean checkIfItemExists(String itemID);
 

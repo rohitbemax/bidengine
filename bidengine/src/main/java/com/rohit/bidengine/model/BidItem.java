@@ -11,30 +11,43 @@ public class BidItem {
 	private String itemID;
 	private double itemPrice;
 	private Date bidStartTime;
-	private double lastBidPrice;
+	private String itemOwnerUser;
+	private int hoursToBid;
+	private double bidFinalPrice;
+	private int bidCriteria;
 	
-	private String bidderName;
-	private Bidder itemOwner;
-	private Date timeToCloseBid;
-	private Double priceToCloseBid;
-	private int criteriaToCloseBid;
+	public double getBidFinalPrice() {
+		return bidFinalPrice;
+	}
+
+	public void setBidFinalPrice(double bidFinalPrice) {
+		this.bidFinalPrice = bidFinalPrice;
+	}
+
+	public int getBidCriteria() {
+		return bidCriteria;
+	}
+
+	public int getHoursToBid() {
+		return hoursToBid;
+	}
+
+	public void setHoursToBid(int hoursToBid) {
+		this.hoursToBid = hoursToBid;
+	}
+
+	public void setBidCriteria(int bidCriteria) {
+		this.bidCriteria = bidCriteria;
+	}
+
+	public String getItemOwnerUser() {
+		return itemOwnerUser;
+	}
 	
-	public Bidder getItemOwner() {
-		return itemOwner;
+	public void setItemOwnerUser(String itemOwnerUser) {
+		this.itemOwnerUser = itemOwnerUser;
 	}
-
-	public void setItemOwner(Bidder itemOwner) {
-		this.itemOwner = itemOwner;
-	}
-
-	public Date getTimeToCloseBid() {
-		return timeToCloseBid;
-	}
-
-	public void setTimeToCloseBid(Date timeToCloseBid) {
-		this.timeToCloseBid = timeToCloseBid;
-	}
-
+	
 	public Date getBidStartTime() {
 		return bidStartTime;
 	}
@@ -43,28 +56,7 @@ public class BidItem {
 		this.bidStartTime = bidStartTime;
 	}
 
-	public double getLastBidPrice() {
-		return lastBidPrice;
-	}
-
-	public void setLastBidPrice(double lastBidPrice) {
-		this.lastBidPrice = lastBidPrice;
-	}
-
-	/*
-	public BidItem(String itemID) {
-		this.itemID = itemID;
-	}
-	*/
-	
-	/*
-	public BidItem(String itemName, String itemID, double itemPrice) {
-		this.itemName = itemName;
-		this.itemID = itemID;
-		this.itemPrice = itemPrice;
-	}*/
-
-	public String getItemName() {
+		public String getItemName() {
 		return itemName;
 	}
 
@@ -86,13 +78,5 @@ public class BidItem {
 
 	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
-	}
-
-	public String getBidderName() {
-		return bidderName;
-	}
-
-	public void setBidderName(String bidderName) {
-		this.bidderName = bidderName;
 	}
 }

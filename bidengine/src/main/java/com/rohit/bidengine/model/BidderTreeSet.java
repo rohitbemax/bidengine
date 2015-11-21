@@ -1,6 +1,5 @@
 package com.rohit.bidengine.model;
 
-import java.sql.PseudoColumnUsage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -8,6 +7,16 @@ import java.util.TreeSet;
 import com.rohit.bidengine.application.BidderComparator;
 
 public class BidderTreeSet {
+	
+	TreeSet<Bidder> bidderTS;
+	
+	public BidderTreeSet() {
+		bidderTS = new TreeSet<Bidder>(new BidderComparator());
+	}
+	
+	public TreeSet<Bidder> getBidderTS() {
+		return bidderTS;
+	}
 	
 	public static List<Bidder> getTopFiveBiddersForItem(List<Bidder> bidderList) {
 		TreeSet<Bidder> bidderTressSet = new TreeSet<Bidder>(new BidderComparator());

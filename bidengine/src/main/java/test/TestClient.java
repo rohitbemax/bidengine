@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.rohit.bidengine.model.BidItem;
 import com.rohit.bidengine.model.Bidder;
+import com.rohit.bidengine.model.User;
 
 public class TestClient {
 
@@ -13,27 +14,62 @@ public class TestClient {
 	public void testCreate() {
 		BidderClient client = new BidderClient();
 		
-		Bidder bidder = new Bidder();
-		bidder.setBidderName("Rohit");		
-		bidder = client.create(bidder);
+		User user = new User();
+		user.setUserName("Rohit");		
+		user = client.create(user);
 		
-		assertNotNull(bidder);
+		assertNotNull(user);
 	}
 	
 	@Test
 	public void testBidItemCreate() {
 		BidderClient client = new BidderClient();
-		BidItem item = new BidItem();
+		BidItem bidItem = new BidItem();
 		
 		Bidder bidder = new Bidder();
 		bidder.setBidderName("Rohit");
 		
-		item.setItemOwner(bidder);
-		item.setItemName("iphone 6s");
-		item.setItemPrice(200000.0);
+
+		bidItem.setItemName("iphone 6s");
+		bidItem.setItemPrice(200000.0);
 		
-		item = client.createItem(item);
+		bidItem = client.createItem(bidItem);
 		
-		assertNotNull(item);
+		assertNotNull(bidItem);
 	}
+	
+	@Test
+	public void testBidCreation() {
+		BidderClient client = new BidderClient();
+		BidItem bidItem = new BidItem();
+		
+		Bidder bidder = new Bidder();
+		bidder.setBidderName("Rohit");
+		
+
+		bidItem.setItemName("iphone 6s");
+		bidItem.setItemPrice(200000.0);
+		
+		bidItem = client.createItem(bidItem);
+		
+		assertNotNull(bidItem);
+	}
+	
+	@Test
+	public void testBidUpdation() {
+		BidderClient client = new BidderClient();
+		BidItem bidItem = new BidItem();
+		
+		Bidder bidder = new Bidder();
+		bidder.setBidderName("Rohit");
+		
+
+		bidItem.setItemName("iphone 6s");
+		bidItem.setItemPrice(200000.0);
+		
+		bidItem = client.createItem(bidItem);
+		
+		assertNotNull(bidItem);
+	}
+
 }
