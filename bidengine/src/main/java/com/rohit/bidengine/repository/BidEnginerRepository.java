@@ -32,6 +32,13 @@ public class BidEnginerRepository {
 	}
 	
 	public BidItem createABidItem(BidItem bidItem) {
+		
+		//Check if the user is registered then only create the bid item else return NULL object
+		if(!bidUserData.containsKey(bidItem.getItemOwnerUser())) {
+			System.out.println("No Item owner found");
+			return null;
+		}
+		
 		BidItem bi = new BidItem();
 		
 		bi.setItemName(bidItem.getItemName());

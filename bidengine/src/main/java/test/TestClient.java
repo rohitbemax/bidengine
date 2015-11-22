@@ -21,31 +21,31 @@ public class TestClient {
 		
 		assertNotNull(user);
 	}
-	*/
 	
 	@Test
 	public void testBidItemCreate() {
 		BidderClient client = new BidderClient();
-		BidItem bidItem = new BidItem();
+		
 
-		for(int i=0; i<2000; i++)	{
-			Bidder bidder = new Bidder();
-			bidder.setBidderName("Rohit" + i);
+		for(int i=0; i<2; i++)	{
+			BidItem bidItem = new BidItem();
+			bidItem.setItemOwnerUser("Rohit");
 			bidItem.setItemName("iphone" + i + "s" );
 			bidItem.setItemPrice(200000.0 + i);
+			bidItem.setBidFinalPrice(3000000.00);
+			bidItem.setHoursToBid(2);
+			bidItem.setBidCriteria(1);
 			bidItem = client.createItem(bidItem);
-			System.out.println(bidItem.getItemID());
+			//System.out.println(bidItem.getItemID());
 			assertNotNull(bidItem);
 		}
 	}
+	*/
 	
-
-	
-
 	@Test
 	public void getBidItemDetails() {
 		BidderClient client = new BidderClient();
-		BidItem bidItem = client.getBidItemDetails("43ab336ad28854d019199a022590537f");
+		BidItem bidItem = client.getBidItemDetails("9e6c2e70ce2c9450d7ee375d7334578");
 		System.out.println("Item Price: " + bidItem.getItemName());
 		System.out.println("Item Price: " + bidItem.getItemPrice());
 	
@@ -57,7 +57,7 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		for(int i=0; i < 10; i++) {
 			BidItem bidItem = new BidItem();
-			bidItem.setItemID("43ab336ad28854d019199a022590537f");
+			bidItem.setItemID("9e6c2e70ce2c9450d7ee375d7334578");
 			bidItem.setItemOwnerUser("Ram Singh" + i);
 			bidItem.setBidFinalPrice(204846.0 + i);
 			bidItem = client.updateBidOnItem(bidItem);
