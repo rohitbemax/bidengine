@@ -39,8 +39,7 @@ public class BidServiceResources {
     @Path("/biditems")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<BidItem> getBidItems() {
-    	System.out.println("This os the function call");
-    	return new BidItemStub().getBidItemList();
+    	return bidderRepository.getAllBidItems();
     }
     
     /*
@@ -95,11 +94,12 @@ public class BidServiceResources {
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
+    	System.out.println("Bid Item ID: " + bidItemID + " --> " + bidItem.getItemID() + " " + bidItem.getItemName());
     	return bidderRepository.updateBidItemWithBid(bidItem, bidItemID);
     }
        
     @PostConstruct
     void loadConfiguration() {
-    	//Create a thread to do the monitoring for closing bids
+    	//Create a thread to do the monitoring for notifications using Async calls
     }
 }

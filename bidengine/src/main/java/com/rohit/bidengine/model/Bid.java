@@ -13,6 +13,7 @@ public class Bid {
 	private double bidFinalPrice;
 	private int bidFianlTimeToElapse;
 	private long bidFinalTimeEpoch;
+	private BidderTreeSet topBidderSet = new BidderTreeSet();
 
 	public int getBidFianlTimeToElapse() {
 		return bidFianlTimeToElapse;
@@ -37,8 +38,6 @@ public class Bid {
 	public void setBidFinalPrice(double bidFinalPrice) {
 		this.bidFinalPrice = bidFinalPrice;
 	}
-
-	private BidderTreeSet topBidderSet = new BidderTreeSet();
 	
 	public boolean isBidOver() {
 		return isBidOver;

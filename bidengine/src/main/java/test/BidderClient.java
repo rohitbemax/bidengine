@@ -23,7 +23,6 @@ public class BidderClient {
 	
 	public Bidder get(String id) {
 		
-		//http://localhost:8080/exercise-services/webapi/activities/1234
 		WebTarget target = client.target("http://localhost:8080/exercise-services/webapi/");
 		
 		Response response = target.path("activities/" + id).request(MediaType.APPLICATION_JSON).get(Response.class);
@@ -46,7 +45,7 @@ public class BidderClient {
 	public User create(User user) {
 		WebTarget target = client.target("http://localhost:8080/bidengine/webapi/");
 		
-		Response response = target.path("myresource/user")
+		Response response = target.path("bidservices/user")
 				.request(MediaType.APPLICATION_JSON)
 				.post(Entity.entity(user, MediaType.APPLICATION_JSON));
 		
@@ -57,12 +56,24 @@ public class BidderClient {
 		return response.readEntity(User.class);
 	}
 	
-	public BidItem createItem(BidItem activity) {
+	public BidItem createItem(BidItem bidItem) {
 		WebTarget target = client.target("http://localhost:8080/bidengine/webapi/");
 		
-		Response response = target.path("myresource/biditem")
+		Response response = target.path("bidservices/biditem")
 				.request(MediaType.APPLICATION_JSON)
-				.post(Entity.entity(activity, MediaType.APPLICATION_JSON));
+				.post(Entity.entity(bidItem, MediaType.APPLICATION_JSON));
+		
+		if(response.getStatus() != 200) {
+			throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
+		}
+		
+		return response.readEntity(BidItem.class);
+	}
+	
+	public BidItem getBidItemDetails(String bidItemID) {
+		WebTarget target = client.target("http://localhost:8080/bidengine/webapi/");
+		
+		Response response = target.path("bidservices/biditem/" + bidItemID).request(MediaType.APPLICATION_JSON).get(Response.class);
 		
 		if(response.getStatus() != 200) {
 			throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
@@ -74,7 +85,7 @@ public class BidderClient {
 	public BidItem createBid(BidItem activity) {
 		WebTarget target = client.target("http://localhost:8080/bidengine/webapi/");
 		
-		Response response = target.path("myresource/biditem")
+		Response response = target.path("bidservices/biditem")
 				.request(MediaType.APPLICATION_JSON)
 				.post(Entity.entity(activity, MediaType.APPLICATION_JSON));
 		
@@ -85,12 +96,12 @@ public class BidderClient {
 		return response.readEntity(BidItem.class);
 	}
 	
-	public BidItem placeNewBid(BidItem activity) {
+	public BidItem updateBidOnItem(BidItem bidItem) {
 		WebTarget target = client.target("http://localhost:8080/bidengine/webapi/");
 		
-		Response response = target.path("myresource/biditem")
+		Response response = target.path("bidservices/biditem/" + bidItem.getItemID())
 				.request(MediaType.APPLICATION_JSON)
-				.post(Entity.entity(activity, MediaType.APPLICATION_JSON));
+				.put(Entity.entity(bidItem, MediaType.APPLICATION_JSON));
 		
 		if(response.getStatus() != 200) {
 			throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
@@ -99,32 +110,4 @@ public class BidderClient {
 		return response.readEntity(BidItem.class);
 	}
 	
-	/*
-	public void delete(String activityId) {
-		WebTarget target = client.target("http://localhost:8080/exercise-services/webapi/");
-		
-		Response response = target.path("activities/" + activityId).request(MediaType.APPLICATION_JSON).delete();
-		
-		if(response.getStatus() != 200) {
-			throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
-		}
-	}
-	*/
-
-
-	/*
-	public Activity update(Activity activity) {
-		WebTarget target = client.target("http://localhost:8080/exercise-services/webapi/");
-		
-		Response response = target.path("activities/" + activity.getId())
-				.request(MediaType.APPLICATION_JSON)
-				.put(Entity.entity(activity, MediaType.APPLICATION_JSON));
-		
-		if(response.getStatus() != 200) {
-			throw new RuntimeException(response.getStatus() + ": there was an error on the server.");
-		}
-		
-		return response.readEntity(Activity.class);
-	}
-	*/
 }
