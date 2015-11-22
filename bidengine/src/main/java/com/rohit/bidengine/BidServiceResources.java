@@ -27,8 +27,8 @@ http://localhost:8080/bidengine/webapi/bidder/biditem/xxx	<- Get top 5 bidder fo
 http://localhost:8080/bidengine/webapi/bidder/biditem/xxx	<- PUT create a bid
 */
 
-@Path("myresource")
-public class MyResource {
+@Path("bidservices")
+public class BidServiceResources {
 
 	BidEnginerRepository bidderRepository = new BidEnginerRepository();
 	    
@@ -95,7 +95,6 @@ public class MyResource {
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
-    //public BidStatus updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
     	return bidderRepository.updateBidItemWithBid(bidItem, bidItemID);
     }
        
