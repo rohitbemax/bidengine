@@ -10,7 +10,7 @@ import com.rohit.bidengine.model.Bidder;
 import com.rohit.bidengine.model.User;
 
 public class TestClient {
-	/*
+
 	@Test
 	public void testCreate() {
 		BidderClient client = new BidderClient();
@@ -70,10 +70,10 @@ public class TestClient {
 			//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());
 		}
 	}
-	*/
+
 	
 	@Test
-	public void putBidOnItem() {
+	public void putBidOnItemLimitTestOnPrice() {
 		BidderClient client = new BidderClient();
 		BidQuote bidQuote = new BidQuote();
 		bidQuote.setBidderName("Ram Singh0");
