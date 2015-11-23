@@ -57,8 +57,10 @@ public class BidEnginerRepository {
 		bid.setBidOver(false);
 		bid.setBidStartTime(new Date());
 		bid.setBidFinalPrice(bi.getBidFinalPrice());
+		bid.setBidCriteria(bidItem.getBidCriteria());
 		//We will get time and covert it to millsecs since epoch for future bid clojure comparison
-		bid.setBidFinalTimeEpoch(bid.getBidStartTime().getTime() + (bid.getBidFinalTimeToElapse() * 60 * 1000));
+		bid.setBidFinalTimeEpoch(bid.getBidStartTime().getTime() + (bidItem.getHoursToBid() * 60 * 60 * 1000));
+		System.out.println("BidFinalTimeEpoch: " + bid.getBidFinalTimeEpoch());
 		
 		//Put the bid in the bidder tree set
 		Bidder bidder = new Bidder();
@@ -105,39 +107,38 @@ public class BidEnginerRepository {
 		return bidderList;
 	}
 	
-	//public synchronized BidItem updateBidItemWithBid(BidItem bidItem, String bidItemID) {
 	public synchronized BidItem updateBidItemWithBid(BidQuote bidQuote, String bidItemID) {
 		
 		//Check to make sure that bid can only be placed by a registered user
-		/*
 		if(!bidUserData.containsKey(bidQuote.getBidderName())) {
 			System.out.println("Bid user not registered!!");
 			return null;
 		}
-		*/
 		
 		Bid bid = findBidByItemID(bidItemID);
 		if(bid == null) {
-			System.out.println("Null bid, will return");
+			System.out.println("WARN: Null bid, will return from updateBidItemWithBidbb");
 			return  null;
 		}
-		
-		System.out.println("Inside the updateBidItemWithBid " + bidItemID);
-		
-		//Case 1: Check if the bid time has crossed the time-margin set for bidding
-		/*
-		if(bid.getBidFinalTimeEpoch() < new Date().getTime()) {
-			System.out.println("Bid over coz of time constraint");
-			bid.setBidOver(true);
+				
+		if(bid.getBidCriteria() == 1) 
+		{	
+			//Case 1: Check if the bid time has crossed the time-margin set for bidding
+			if(bid.getBidFinalTimeEpoch() < new Date().getTime()) {
+				System.out.println("Bid over coz of time constraint");
+				bid.setBidOver(true);
+			}
+		}
+		else 
+		{	
+			//Case 2: Check if the new bid price crosses the final price set by bidder
+			if(bid.getBidFinalPrice() < bidQuote.getBidPrice()) 
+			{
+				System.out.println("Bid over coz of time price");
+				bid.setBidOver(true);
+			}
 		}
 				
-		//Case 2: Check if the new bid price crosses the final price set by bidder
-		if(bidItem.getBidFinalPrice() > bid.getBidFinalPrice()) {
-			System.out.println("Bid over coz of time price");
-			bid.setBidOver(true);
-		}
-		*/
-		
 		if(bid.isBidOver() == true) {
 			System.out.println("Bid is over is true");
 			return bid.getBidItem();

@@ -11,7 +11,7 @@ import com.rohit.bidengine.model.User;
 
 public class TestClient {
 
-
+	/*
 	@Test
 	public void testCreate() {
 		BidderClient client = new BidderClient();
@@ -20,7 +20,12 @@ public class TestClient {
 		user.setUserName("Rohit");		
 		user = client.create(user);
 		
-		assertNotNull(user);
+		for(int i=0; i< 20; i++) {
+			user = new User();
+			user.setUserName("Ram Singh" + i);		
+			user = client.create(user);
+			assertNotNull(user);
+		}
 	}
 	
 	@Test
@@ -65,5 +70,18 @@ public class TestClient {
 			System.out.println("Item Price: " + bidItem.getItemPrice());
 			//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());
 		}
+	}
+	*/
+	
+	@Test
+	public void putBidOnItem() {
+		BidderClient client = new BidderClient();
+		BidQuote bidQuote = new BidQuote();
+		bidQuote.setBidderName("Ram Singh0");
+		bidQuote.setBidPrice(3200000.0);
+		BidItem bidItem = client.updateBidOnItem(bidQuote, "9e6c2e70ce2c9450d7ee375d7334578");
+		System.out.println("Item Price: " + bidItem.getItemName());
+		System.out.println("Item Price: " + bidItem.getItemPrice());
+		//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());
 	}
 }

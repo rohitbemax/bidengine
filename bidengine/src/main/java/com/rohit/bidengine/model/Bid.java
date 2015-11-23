@@ -13,7 +13,16 @@ public class Bid {
 	private double bidFinalPrice;
 	private int bidFinalTimeToElapse;
 	private long bidFinalTimeEpoch;
+	private int bidCriteria;
 	private BidderTreeSet topBidderSet = new BidderTreeSet();
+
+	public int getBidCriteria() {
+		return bidCriteria;
+	}
+
+	public void setBidCriteria(int bidCriteria) {
+		this.bidCriteria = bidCriteria;
+	}
 
 	public int getBidFinalTimeToElapse() {
 		return bidFinalTimeToElapse;
