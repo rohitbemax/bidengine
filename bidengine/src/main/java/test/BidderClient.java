@@ -96,12 +96,12 @@ public class BidderClient {
 		return response.readEntity(BidItem.class);
 	}
 	
-	public BidItem updateBidOnItem(BidItem bidItem) {
+	public BidItem updateBidOnItem(BidQuote bidQuote, String bidItemID) {
 		WebTarget target = client.target("http://localhost:8080/bidengine/webapi/");
 		
-		Response response = target.path("bidservices/biditem/" + bidItem.getItemID())
+		Response response = target.path("bidservices/biditem/" + bidItemID)
 				.request(MediaType.APPLICATION_JSON)
-				.put(Entity.entity(bidItem, MediaType.APPLICATION_JSON));
+				.put(Entity.entity(bidQuote, MediaType.APPLICATION_JSON));
 		
 		if(response.getStatus() != 200) {
 			throw new RuntimeException(response.getStatus() + ": there was an error on the server.");

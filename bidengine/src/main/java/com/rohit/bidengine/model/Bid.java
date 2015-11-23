@@ -11,16 +11,16 @@ public class Bid {
 	private double lastBidPrice;
 	private String lastBidder;
 	private double bidFinalPrice;
-	private int bidFianlTimeToElapse;
+	private int bidFinalTimeToElapse;
 	private long bidFinalTimeEpoch;
 	private BidderTreeSet topBidderSet = new BidderTreeSet();
 
-	public int getBidFianlTimeToElapse() {
-		return bidFianlTimeToElapse;
+	public int getBidFinalTimeToElapse() {
+		return bidFinalTimeToElapse;
 	}
 
-	public void setBidFianlTimeToElapse(int bidFianlTimeToElapse) {
-		this.bidFianlTimeToElapse = bidFianlTimeToElapse;
+	public void setBidFinalTimeToElapse(int bidFinalTimeToElapse) {
+		this.bidFinalTimeToElapse = bidFinalTimeToElapse;
 	}
 
 	public long getBidFinalTimeEpoch() {

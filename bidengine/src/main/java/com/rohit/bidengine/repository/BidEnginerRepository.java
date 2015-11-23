@@ -11,6 +11,8 @@ import java.util.TreeSet;
 import com.rohit.bidengine.application.GenericHasher;
 import com.rohit.bidengine.model.Bid;
 import com.rohit.bidengine.model.BidItem;
+import com.rohit.bidengine.model.BidQuote;
+import com.rohit.bidengine.model.BidStatus;
 import com.rohit.bidengine.model.Bidder;
 import com.rohit.bidengine.model.User;
 
@@ -46,6 +48,7 @@ public class BidEnginerRepository {
 		bi.setBidStartTime(new Date());
 		bi.setItemPrice(bidItem.getItemPrice());
 		bi.setBidCriteria(bidItem.getBidCriteria());
+		bi.setBidFinalPrice(bidItem.getBidFinalPrice());
 		bi.setItemID(GenericHasher.generateIDForItem(bidItem.getItemOwnerUser(), bidItem.getItemName()));
 		
 		//Once you create a bid item create a bid also
@@ -55,7 +58,7 @@ public class BidEnginerRepository {
 		bid.setBidStartTime(new Date());
 		bid.setBidFinalPrice(bi.getBidFinalPrice());
 		//We will get time and covert it to millsecs since epoch for future bid clojure comparison
-		bid.setBidFinalTimeEpoch(bid.getBidStartTime().getTime() + (bid.getBidFianlTimeToElapse() * 60 * 1000));
+		bid.setBidFinalTimeEpoch(bid.getBidStartTime().getTime() + (bid.getBidFinalTimeToElapse() * 60 * 1000));
 		
 		//Put the bid in the bidder tree set
 		Bidder bidder = new Bidder();
@@ -64,6 +67,7 @@ public class BidEnginerRepository {
 		bid.getTopBidderSet().getBidderTS().add(bidder);
 		
 		//Add to the global hash
+		System.out.println("Adding to global hash: " + bid.getBidItem().getItemID());
 		bidItemData.put(bid.getBidItem().getItemID(), bid);
 		
 		return bi;
@@ -76,6 +80,7 @@ public class BidEnginerRepository {
 		Bid bid = findBidByItemID(bidItemID);
 		TreeSet<Bidder> bidderTS = bid.getTopBidderSet().getBidderTS();
 		
+		System.out.println("Size: " + bidderTS.size());
 		int i = 0;
 		for(Bidder b : bidderTS) {
 			if(i++ >= 5) {
@@ -86,6 +91,9 @@ public class BidEnginerRepository {
 			bidder.setBidderName(b.getBidderName());
 			bidder.setBidPrice(b.getBidPrice());
 			
+			System.out.println("Bidder Name: " + b.getBidderName());
+			System.out.println("Bid Price: " + b.getBidPrice());
+			
 			//Add the bidder to the bidderList which will contain the list of top 5 bidders
 			bidderList.add(bidder);
 		}
@@ -93,11 +101,28 @@ public class BidEnginerRepository {
 		return bidderList;
 	}
 	
-	public BidItem updateBidItemWithBid(BidItem bidItem, String bidItemID) {
+	//public synchronized BidItem updateBidItemWithBid(BidItem bidItem, String bidItemID) {
+	public synchronized BidItem updateBidItemWithBid(BidQuote bidQuote, String bidItemID) {
+		
+		//Check to make sure that bid can only be placed by a registered user
+		/*
+		if(!bidUserData.containsKey(bidQuote.getBidderName())) {
+			System.out.println("Bid user not registered!!");
+			return null;
+		}
+		*/
+		
 		Bid bid = findBidByItemID(bidItemID);
+		if(bid == null) {
+			System.out.println("Null bid, will return");
+			return  null;
+		}
+		
+		System.out.println("Inside the updateBidItemWithBid " + bidItemID);
 		
 		//Case 1: Check if the bid time has crossed the time-margin set for bidding
-		if(bid.getBidFianlTimeToElapse() < new Date().getTime()) {
+		/*
+		if(bid.getBidFinalTimeEpoch() < new Date().getTime()) {
 			System.out.println("Bid over coz of time constraint");
 			bid.setBidOver(true);
 		}
@@ -107,21 +132,33 @@ public class BidEnginerRepository {
 			System.out.println("Bid over coz of time price");
 			bid.setBidOver(true);
 		}
+		*/
 		
 		if(bid.isBidOver() == true) {
+			System.out.println("Bid is over is true");
 			return bid.getBidItem();
 		}
 		
-		//If bid is not over udpate the bid item
-		//Once you create a bid item create a bid also
-		BidItem item = new BidItem();
+		//If bid is not over udpate the bid item once you create a bid item create a bid also
+		
+		BidItem item;
 		item = bid.getBidItem();
-		item.setItemPrice(bidItem.getItemPrice());
+		item.setItemPrice(bidQuote.getBidPrice());
 		bid.setBidItem(item);
 		bid.setBidOver(false);
-		bid.setLastBidder(bidItem.getItemOwnerUser());
-		bid.setLastBidPrice(bidItem.getItemPrice());
-				
+		
+		Bidder bidder = new Bidder();
+		bidder.setBidderName(bidQuote.getBidderName());
+		bidder.setBidPrice(bidQuote.getBidPrice());
+		
+		bid.setLastBidder(bidQuote.getBidderName());
+		bid.setLastBidPrice(bidQuote.getBidPrice());
+		
+		bid.getTopBidderSet().getBidderTS().add(bidder);
+		
+		System.out.println("Bid Item Price: " + bid.getLastBidPrice());
+		System.out.println("Bid Item Owner: " + bid.getLastBidder());
+		
 		//Add to the global hash
 		bidItemData.remove(bidItemID);
 		bidItemData.put(bidItemID, bid);

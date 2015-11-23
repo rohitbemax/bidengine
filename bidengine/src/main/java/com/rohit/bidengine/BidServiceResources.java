@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import com.rohit.bidengine.model.BidItem;
+import com.rohit.bidengine.model.BidQuote;
 import com.rohit.bidengine.model.BidStatus;
 import com.rohit.bidengine.model.Bidder;
 import com.rohit.bidengine.model.User;
@@ -61,8 +62,8 @@ public class BidServiceResources {
     @GET
     @Path("/bidder/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public BidItem getTopBiddersForTheItemByItemID(@PathParam("bidItemID") String bidItemID) {
-    	return bidderRepository.findBidItemByID(bidItemID);
+    public List<Bidder> getTopBiddersForTheItemByItemID(@PathParam("bidItemID") String bidItemID) {
+    	return bidderRepository.viewBiddersOnItemByPrice(bidItemID);
     }
     
     /*
@@ -93,9 +94,10 @@ public class BidServiceResources {
     @PUT
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
-    	System.out.println("Bid Item ID: " + bidItemID + " --> " + bidItem.getItemID() + " " + bidItem.getItemName());
-    	return bidderRepository.updateBidItemWithBid(bidItem, bidItemID);
+    //public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
+    public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
+    	System.out.println("Bid Quote ID: " + bidItemID + " --> " + bidQuote.getBidderName() + " " + bidQuote.getBidPrice());
+    	return bidderRepository.updateBidItemWithBid(bidQuote, bidItemID);
     }
        
     @PostConstruct
