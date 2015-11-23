@@ -78,6 +78,10 @@ public class BidEnginerRepository {
 		List<Bidder> bidderList = new ArrayList<Bidder>();
 		
 		Bid bid = findBidByItemID(bidItemID);
+		if(bid == null) {
+			System.out.println("WARN: No such bid found in the record");
+			return null;
+		}
 		TreeSet<Bidder> bidderTS = bid.getTopBidderSet().getBidderTS();
 		
 		System.out.println("Size: " + bidderTS.size());
