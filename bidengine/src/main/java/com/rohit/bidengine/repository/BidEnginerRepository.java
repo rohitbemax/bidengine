@@ -108,7 +108,6 @@ public class BidEnginerRepository {
 	}
 	
 	public synchronized BidItem updateBidItemWithBid(BidQuote bidQuote, String bidItemID) {
-		
 		//Check to make sure that bid can only be placed by a registered user
 		if(!bidUserData.containsKey(bidQuote.getBidderName())) {
 			System.out.println("Bid user not registered!!");
@@ -120,7 +119,12 @@ public class BidEnginerRepository {
 			System.out.println("WARN: Null bid, will return from updateBidItemWithBidbb");
 			return  null;
 		}
-				
+		
+		if(bid.isBidOver() == true) {
+			System.out.println("Bid is over is true");
+			return bid.getBidItem();
+		}
+		
 		if(bid.getBidCriteria() == 1) 
 		{	
 			//Case 1: Check if the bid time has crossed the time-margin set for bidding
@@ -132,25 +136,19 @@ public class BidEnginerRepository {
 		else 
 		{	
 			//Case 2: Check if the new bid price crosses the final price set by bidder
-			if(bid.getBidFinalPrice() < bidQuote.getBidPrice()) 
+			if(bidQuote.getBidPrice() > bid.getBidFinalPrice()) 
 			{
-				System.out.println("Bid over coz of time price");
+				System.out.println("Bid over coz of price");
 				bid.setBidOver(true);
 			}
 		}
 				
-		if(bid.isBidOver() == true) {
-			System.out.println("Bid is over is true");
-			return bid.getBidItem();
-		}
-		
 		//If bid is not over udpate the bid item once you create a bid item create a bid also
 		
 		BidItem item;
 		item = bid.getBidItem();
 		item.setItemPrice(bidQuote.getBidPrice());
 		bid.setBidItem(item);
-		bid.setBidOver(false);
 		
 		Bidder bidder = new Bidder();
 		bidder.setBidderName(bidQuote.getBidderName());

@@ -10,7 +10,6 @@ import com.rohit.bidengine.model.Bidder;
 import com.rohit.bidengine.model.User;
 
 public class TestClient {
-
 	/*
 	@Test
 	public void testCreate() {
@@ -40,7 +39,7 @@ public class TestClient {
 			bidItem.setItemPrice(200000.0 + i);
 			bidItem.setBidFinalPrice(300000.00);
 			bidItem.setHoursToBid(2);
-			bidItem.setBidCriteria(1);
+			bidItem.setBidCriteria(2);
 			bidItem = client.createItem(bidItem);
 			//System.out.println(bidItem.getItemID());
 			assertNotNull(bidItem);
@@ -78,7 +77,7 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		BidQuote bidQuote = new BidQuote();
 		bidQuote.setBidderName("Ram Singh0");
-		bidQuote.setBidPrice(3200000.0);
+		bidQuote.setBidPrice(3400000.0);
 		BidItem bidItem = client.updateBidOnItem(bidQuote, "9e6c2e70ce2c9450d7ee375d7334578");
 		System.out.println("Item Price: " + bidItem.getItemName());
 		System.out.println("Item Price: " + bidItem.getItemPrice());
