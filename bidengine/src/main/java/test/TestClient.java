@@ -78,7 +78,7 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		BidQuote bidQuote = new BidQuote();
 		bidQuote.setBidderName("Ram Singh0");
-		bidQuote.setBidPrice(300002.0);
+		bidQuote.setBidPrice(300010.0);
 		
 		BidStatus bidStatus = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
 		System.out.println("Item Price: " + bidStatus.getLastHighestBidPrice());
@@ -86,5 +86,4 @@ public class TestClient {
 		System.out.println("Is Bid Closed: " + bidStatus.isBidClosed());
 		System.out.println("Is Bid Placed: " + bidStatus.isBidPlacedSuccessfully());
 	}
-	
 }
