@@ -32,7 +32,7 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		
 
-		for(int i=0; i<2; i++)	{
+		for(int i=0; i<10; i++)	{
 			BidItem bidItem = new BidItem();
 			bidItem.setItemOwnerUser("Rohit");
 			bidItem.setItemName("iphone" + i + "s" );
@@ -61,7 +61,6 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		for(int i=0; i < 10; i++) {
 			BidQuote bidQuote = new BidQuote();
-			//bidQuote.setItemID("9e6c2e70ce2c9450d7ee375d7334578");
 			bidQuote.setBidderName("Ram Singh" + i);
 			bidQuote.setBidPrice(204849.0 + i);
 			BidItem bidItem = client.updateBidOnItem(bidQuote, "9e6c2e70ce2c9450d7ee375d7334578");
@@ -77,7 +76,7 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		BidQuote bidQuote = new BidQuote();
 		bidQuote.setBidderName("Ram Singh0");
-		bidQuote.setBidPrice(3400000.0);
+		bidQuote.setBidPrice(3500000.0);
 		BidItem bidItem = client.updateBidOnItem(bidQuote, "9e6c2e70ce2c9450d7ee375d7334578");
 		System.out.println("Item Price: " + bidItem.getItemName());
 		System.out.println("Item Price: " + bidItem.getItemPrice());
