@@ -32,7 +32,7 @@ public class TestClient {
 		BidderClient client = new BidderClient();
 		
 
-		for(int i=0; i<10; i++)	{
+		for(int i=0; i<2; i++)	{
 			BidItem bidItem = new BidItem();
 			bidItem.setItemOwnerUser("Rohit");
 			bidItem.setItemName("iphone" + i + "s" );
@@ -41,43 +41,44 @@ public class TestClient {
 			bidItem.setHoursToBid(2);
 			bidItem.setBidCriteria(2);
 			bidItem = client.createItem(bidItem);
-			//System.out.println(bidItem.getItemID());
+			System.out.println(bidItem.getItemID());
 			assertNotNull(bidItem);
 		}
 	}
 	
+	
 	@Test
 	public void getBidItemDetails() {
 		BidderClient client = new BidderClient();
-		BidItem bidItem = client.getBidItemDetails("9e6c2e70ce2c9450d7ee375d7334578");
+		BidItem bidItem = client.getBidItemDetails("250d7aaabd953d6c2b1603a0d6aea31d");
 		System.out.println("Item Price: " + bidItem.getItemName());
 		System.out.println("Item Price: " + bidItem.getItemPrice());
 	
 	}
 	
-
+	
 	@Test
 	public void putBidOnItem() {
 		BidderClient client = new BidderClient();
-		for(int i=0; i < 10; i++) {
+		for(int i=0; i < 4; i++) {
 			BidQuote bidQuote = new BidQuote();
 			bidQuote.setBidderName("Ram Singh" + i);
 			bidQuote.setBidPrice(204849.0 + i);
-			BidItem bidItem = client.updateBidOnItem(bidQuote, "9e6c2e70ce2c9450d7ee375d7334578");
+			BidItem bidItem = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
 			System.out.println("Item Price: " + bidItem.getItemName());
 			System.out.println("Item Price: " + bidItem.getItemPrice());
 			//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());
 		}
 	}
-
 	
+
 	@Test
 	public void putBidOnItemLimitTestOnPrice() {
 		BidderClient client = new BidderClient();
 		BidQuote bidQuote = new BidQuote();
 		bidQuote.setBidderName("Ram Singh0");
-		bidQuote.setBidPrice(3500000.0);
-		BidItem bidItem = client.updateBidOnItem(bidQuote, "9e6c2e70ce2c9450d7ee375d7334578");
+		bidQuote.setBidPrice(3600000.0);
+		BidItem bidItem = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
 		System.out.println("Item Price: " + bidItem.getItemName());
 		System.out.println("Item Price: " + bidItem.getItemPrice());
 		//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());

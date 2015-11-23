@@ -58,9 +58,9 @@ public class BidEnginerRepository {
 		bid.setBidStartTime(new Date());
 		bid.setBidFinalPrice(bi.getBidFinalPrice());
 		bid.setBidCriteria(bidItem.getBidCriteria());
+		
 		//We will get time and covert it to millsecs since epoch for future bid clojure comparison
 		bid.setBidFinalTimeEpoch(bid.getBidStartTime().getTime() + (bidItem.getHoursToBid() * 60 * 60 * 1000));
-		System.out.println("BidFinalTimeEpoch: " + bid.getBidFinalTimeEpoch());
 		
 		//Put the bid in the bidder tree set
 		Bidder bidder = new Bidder();
@@ -68,8 +68,6 @@ public class BidEnginerRepository {
 		bidder.setBidPrice(bidItem.getItemPrice());
 		bid.getTopBidderSet().getBidderTS().add(bidder);
 		
-		//Add to the global hash
-		System.out.println("Adding to global hash: " + bid.getBidItem().getItemID());
 		bidItemData.put(bid.getBidItem().getItemID(), bid);
 		
 		return bi;
@@ -81,12 +79,11 @@ public class BidEnginerRepository {
 		
 		Bid bid = findBidByItemID(bidItemID);
 		if(bid == null) {
-			System.out.println("WARN: No such bid found in the record");
+			System.out.println("WARN: No such bid item found in the record");
 			return null;
 		}
 		TreeSet<Bidder> bidderTS = bid.getTopBidderSet().getBidderTS();
 		
-		System.out.println("Size: " + bidderTS.size());
 		int i = 0;
 		for(Bidder b : bidderTS) {
 			if(i++ >= 5) {
@@ -96,9 +93,6 @@ public class BidEnginerRepository {
 			Bidder bidder = new Bidder();
 			bidder.setBidderName(b.getBidderName());
 			bidder.setBidPrice(b.getBidPrice());
-			
-			System.out.println("Bidder Name: " + b.getBidderName());
-			System.out.println("Bid Price: " + b.getBidPrice());
 			
 			//Add the bidder to the bidderList which will contain the list of top 5 bidders
 			bidderList.add(bidder);
@@ -200,5 +194,19 @@ public class BidEnginerRepository {
         }
 	    
 	    return bidItemList;
+	}
+	
+	//This function will return will the BidItems from the repository
+	public List<User> getAllUsers() {
+		List<User> userList = new ArrayList<>();
+		    
+		Iterator<Map.Entry<String, User>> iterator = bidUserData.entrySet().iterator() ;
+	    while(iterator.hasNext())
+	    {
+	    	Map.Entry<String, User> bidder = iterator.next();
+	        userList.add(bidder.getValue());
+	    }
+		    
+		return userList;
 	}
 }

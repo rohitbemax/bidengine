@@ -32,6 +32,16 @@ http://localhost:8080/bidengine/webapi/bidder/biditem/xxx	<- PUT create a bid
 public class BidServiceResources {
 
 	BidEnginerRepository bidderRepository = new BidEnginerRepository();
+	
+	/*
+     *	This web service will return list of all the bid items 
+     */
+    @GET
+    @Path("/users")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<User> getUsers() {
+    	return bidderRepository.getAllUsers();
+    }
 	    
 	/*
      *	This web service will return list of all the bid items 
@@ -94,7 +104,6 @@ public class BidServiceResources {
     @PUT
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    //public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidItem bidItem) {
     public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
     	System.out.println("Bid Quote ID: " + bidItemID + " --> " + bidQuote.getBidderName() + " " + bidQuote.getBidPrice());
     	return bidderRepository.updateBidItemWithBid(bidQuote, bidItemID);
