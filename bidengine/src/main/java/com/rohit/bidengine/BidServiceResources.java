@@ -104,7 +104,8 @@ public class BidServiceResources {
     @PUT
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
+    //public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
+    public BidStatus updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
     	System.out.println("Bid Quote ID: " + bidItemID + " --> " + bidQuote.getBidderName() + " " + bidQuote.getBidPrice());
     	return bidderRepository.updateBidItemWithBid(bidQuote, bidItemID);
     }

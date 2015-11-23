@@ -101,7 +101,8 @@ public class BidEnginerRepository {
 		return bidderList;
 	}
 	
-	public synchronized BidItem updateBidItemWithBid(BidQuote bidQuote, String bidItemID) {
+	//public synchronized BidItem updateBidItemWithBid(BidQuote bidQuote, String bidItemID) {
+	public synchronized BidStatus updateBidItemWithBid(BidQuote bidQuote, String bidItemID) {
 		//Check to make sure that bid can only be placed by a registered user
 		if(!bidUserData.containsKey(bidQuote.getBidderName())) {
 			System.out.println("Bid user not registered!!");
@@ -116,7 +117,14 @@ public class BidEnginerRepository {
 		
 		if(bid.isBidOver() == true) {
 			System.out.println("Bid is over is true");
-			return bid.getBidItem();
+			BidStatus bidStatus = new BidStatus();
+			bidStatus.setBidClosed(true);
+			bidStatus.setBidPlacedSuccessfully(false);
+			bidStatus.setLastHighestBidPrice(getTopBidderOnTheBid(bidItemID).getBidPrice());
+			bidStatus.setCurrentUsersBid(bidQuote.getBidPrice());
+			
+			return bidStatus;
+			//return bid.getBidItem();
 		}
 		
 		if(bid.getBidCriteria() == 1) 
@@ -160,8 +168,14 @@ public class BidEnginerRepository {
 		bidItemData.remove(bidItemID);
 		bidItemData.put(bidItemID, bid);
 		
+		BidStatus bidStatus = new BidStatus();
+		bidStatus.setBidClosed(false);
+		bidStatus.setBidPlacedSuccessfully(true);
+		bidStatus.setLastHighestBidPrice(getTopBidderOnTheBid(bidItemID).getBidPrice());
+		bidStatus.setCurrentUsersBid(bidQuote.getBidPrice());
 		
-		return bid.getBidItem();
+		return bidStatus;
+		//return bid.getBidItem();
 	}
 	
 	//Find the Bid object from the bid global map
@@ -208,5 +222,24 @@ public class BidEnginerRepository {
 	    }
 		    
 		return userList;
+	}
+	
+	public Bidder getTopBidderOnTheBid(String bidItemID) {
+		Bidder bidder = new Bidder();
+		
+		Bid bid = findBidByItemID(bidItemID);
+		if(bid == null) {
+			System.out.println("WARN: No such bid item found in the record");
+			return null;
+		}
+		TreeSet<Bidder> bidderTS = bid.getTopBidderSet().getBidderTS();
+		
+		for(Bidder b : bidderTS) {
+			bidder.setBidderName(b.getBidderName());
+			bidder.setBidPrice(b.getBidPrice());
+			break;	//We just need the top record
+		}
+		
+		return bidder;
 	}
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.rohit.bidengine.model.BidItem;
 import com.rohit.bidengine.model.BidQuote;
+import com.rohit.bidengine.model.BidStatus;
 import com.rohit.bidengine.model.Bidder;
 import com.rohit.bidengine.model.User;
 
@@ -64,23 +65,26 @@ public class TestClient {
 			BidQuote bidQuote = new BidQuote();
 			bidQuote.setBidderName("Ram Singh" + i);
 			bidQuote.setBidPrice(204849.0 + i);
-			BidItem bidItem = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
-			System.out.println("Item Price: " + bidItem.getItemName());
-			System.out.println("Item Price: " + bidItem.getItemPrice());
-			//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());
+			BidStatus bidStatus = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
+			System.out.println("Highest Bid Price: " + bidStatus.getLastHighestBidPrice());
+			System.out.println("Current users bid:" + bidStatus.getCurrentUsersBid());
+			System.out.println("Is Bid Closed: " + bidStatus.isBidClosed());
+			System.out.println("Is Bid Success: " + bidStatus.isBidPlacedSuccessfully());
 		}
 	}
 	
-
 	@Test
 	public void putBidOnItemLimitTestOnPrice() {
 		BidderClient client = new BidderClient();
 		BidQuote bidQuote = new BidQuote();
 		bidQuote.setBidderName("Ram Singh0");
-		bidQuote.setBidPrice(3600000.0);
-		BidItem bidItem = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
-		System.out.println("Item Price: " + bidItem.getItemName());
-		System.out.println("Item Price: " + bidItem.getItemPrice());
-		//System.out.println("Item Owner: " + bidItem.getItemOwnerUser());
+		bidQuote.setBidPrice(300002.0);
+		
+		BidStatus bidStatus = client.updateBidOnItem(bidQuote, "250d7aaabd953d6c2b1603a0d6aea31d");
+		System.out.println("Item Price: " + bidStatus.getLastHighestBidPrice());
+		System.out.println("Current users bid:" + bidStatus.getCurrentUsersBid());
+		System.out.println("Is Bid Closed: " + bidStatus.isBidClosed());
+		System.out.println("Is Bid Placed: " + bidStatus.isBidPlacedSuccessfully());
 	}
+	
 }

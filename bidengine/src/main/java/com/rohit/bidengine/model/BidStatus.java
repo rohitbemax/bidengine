@@ -5,35 +5,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class BidStatus {
 
-	private String statusMessage;
-	private int bidReponseCode;
-	private String lastHighestBidder;
 	private double lastHighestBidPrice;
+	private double currentUsersBid;
+	private boolean isBidClosed;
+	private boolean isBidPlacedSuccessfully;
 	
-	public String getStatusMessage() {
-		return statusMessage;
+	public double getCurrentUsersBid() {
+		return currentUsersBid;
 	}
-	
-	public void setStatusMessage(String statusMessage) {
-		this.statusMessage = statusMessage;
+
+	public void setCurrentUsersBid(double currentUsersBid) {
+		this.currentUsersBid = currentUsersBid;
 	}
-	
-	public int getBidReponseCode() {
-		return bidReponseCode;
+
+	public boolean isBidClosed() {
+		return isBidClosed;
 	}
-	
-	public void setBidReponseCode(int bidReponseCode) {
-		this.bidReponseCode = bidReponseCode;
+
+	public void setBidClosed(boolean isBidClosed) {
+		this.isBidClosed = isBidClosed;
 	}
-	
-	public String getLastHighestBidder() {
-		return lastHighestBidder;
+
+	public boolean isBidPlacedSuccessfully() {
+		return isBidPlacedSuccessfully;
 	}
-	
-	public void setLastHighestBidder(String lastHighestBidder) {
-		this.lastHighestBidder = lastHighestBidder;
+
+	public void setBidPlacedSuccessfully(boolean isBidPlacedSuccessfully) {
+		this.isBidPlacedSuccessfully = isBidPlacedSuccessfully;
 	}
-	
+
 	public double getLastHighestBidPrice() {
 		return lastHighestBidPrice;
 	}
