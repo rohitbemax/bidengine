@@ -20,12 +20,13 @@ import com.rohit.bidengine.repository.BidEnginerRepository;
 
 
 /*
-http://localhost:8080/bidengine/webapi/bidder				<- POST create bidder
-http://localhost:8080/bidengine/webapi/biditem				<- POST create item
-http://localhost:8080/bidengine/webapi/biditems				<- Get all bid items
-http://localhost:8080/bidengine/webapi/biditem/xxx			<- GET bid item details and status
-http://localhost:8080/bidengine/webapi/bidder/biditem/xxx	<- Get top 5 bidder for the item
-http://localhost:8080/bidengine/webapi/bidder/biditem/xxx	<- PUT create a bid
+http://localhost:8080/bidengine/bidservices/users				<- GET get bidder list
+http://localhost:8080/bidengine/bidservices/bidder				<- POST create Bidder
+http://localhost:8080/bidengine/bidservices/biditem				<- POST create Item
+http://localhost:8080/bidengine/bidservices/biditems			<- GET, retrive all bid items
+http://localhost:8080/bidengine/bidservices/biditem/xxx			<- GET retrive bid item details & status
+http://localhost:8080/bidengine/bidservices/bidder/biditem/xxx	<- Get top 5 bidder for the item
+http://localhost:8080/bidengine/bidservices/bidder/biditem/xxx	<- PUT create a bid
 */
 
 @Path("bidservices")
@@ -104,7 +105,6 @@ public class BidServiceResources {
     @PUT
     @Path("/biditem/{bidItemID}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    //public BidItem updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
     public BidStatus updateBidItemDetails(@PathParam("bidItemID") String bidItemID, BidQuote bidQuote) {
     	System.out.println("Bid Quote ID: " + bidItemID + " --> " + bidQuote.getBidderName() + " " + bidQuote.getBidPrice());
     	return bidderRepository.updateBidItemWithBid(bidQuote, bidItemID);
